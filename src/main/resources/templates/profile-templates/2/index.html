@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xml:lang="en" lang="en">
 
 <head>
      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -46,14 +46,10 @@
                 Email: <a class="email" href="mailto:greatoldone@lovecraft.com">greatoldone@lovecraft.com</a>
             </p>
         </div>
-                
+
+        <!-- SUMMARY -->
         <div id="objective">
-            <p>
-                I am an outgoing and energetic (ask anybody) young professional, seeking a 
-                career that fits my professional skills, personality, and murderous tendencies. 
-                My squid-like head is a masterful problem solver and inspires fear in who gaze upon it. 
-                I can bring world domination to your organization. 
-            </p>
+            <p th:text="${userProfile.summary}"></p>
         </div>
         
         <div class="clear"></div>
