@@ -1,5 +1,6 @@
 package com.mohit.resumeportal;
 
+import com.mohit.resumeportal.models.Job;
 import com.mohit.resumeportal.models.User;
 import com.mohit.resumeportal.models.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Optional;
 
 @Controller
@@ -20,6 +23,33 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(){
+
+        UserProfile userProfile = new UserProfile();
+        userProfile.setId(1);
+        userProfile.setDesignation("Designation");
+        userProfile.setUserName("elon");
+        userProfile.setFirstName("Elon");
+        userProfile.setLastName("Musk");
+        userProfile.setTheme(1);
+
+        Job job1 = new Job();
+        job1.setCompany("Company 1");
+        job1.setDesignation("Designation");
+        job1.setId(1);
+        job1.setStartDate(LocalDate.of(2020,1,1));
+        job1.setEndDate(LocalDate.of(2020,3,1));
+
+        Job job2 = new Job();
+        job2.setCompany("Company 2");
+        job2.setDesignation("Designation 2");
+        job2.setId(2);
+        job2.setStartDate(LocalDate.of(2019,5,1));
+        job2.setEndDate(LocalDate.of(2020,1,1));
+
+        userProfile.setJobs(Arrays.asList(job1,job2));
+
+        userProfileRepository.save(userProfile);
+
         return "profile";
     }
 
@@ -38,6 +68,9 @@ public class HomeController {
         UserProfile userProfile = userProfileOptional.get();
         model.addAttribute("userProfile",userProfile);
 
+        System.out.println("\n\n\n\n\n  ###### START");
+        System.out.println(userProfile.getJobs());
+        System.out.println("\n\n\n\n\n  #######END");
 
         return "profile-templates/" + userProfile.getTheme() + "/index";
     }

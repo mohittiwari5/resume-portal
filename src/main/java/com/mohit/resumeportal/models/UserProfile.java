@@ -1,6 +1,8 @@
 package com.mohit.resumeportal.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "userprofile")
@@ -33,6 +35,20 @@ public class UserProfile {
 
     @Column(name = "designation")
     private String designation;
+
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name="job_id")
+    List<Job> jobs = new ArrayList<>();
+
+
+    public List<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
+    }
+
 
 
 
