@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -24,13 +26,13 @@ public class HomeController {
     @GetMapping("/")
     public String home(){
 
-        UserProfile userProfile = new UserProfile();
-        userProfile.setId(1);
-        userProfile.setDesignation("Designation");
-        userProfile.setUserName("elon");
-        userProfile.setFirstName("Elon");
-        userProfile.setLastName("Musk");
-        userProfile.setTheme(1);
+        Optional<UserProfile> profileOptional = userProfileRepository.findByUserName("elon");
+        profileOptional.orElseThrow(() -> new RuntimeException("Not found: "));
+
+        UserProfile profile1 = profileOptional.get();
+
+
+
 
         Job job1 = new Job();
         job1.setCompany("Company 1");
@@ -46,9 +48,12 @@ public class HomeController {
         job2.setStartDate(LocalDate.of(2019,5,1));
         job2.setEndDate(LocalDate.of(2020,1,1));
 
-        userProfile.setJobs(Arrays.asList(job1,job2));
 
-        userProfileRepository.save(userProfile);
+        profile1.getJobs().clear();
+        profile1.getJobs().add(job1);
+        profile1.getJobs().add(job2);
+
+        userProfileRepository.save(profile1);
 
         return "profile";
     }
