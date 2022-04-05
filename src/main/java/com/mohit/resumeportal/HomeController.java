@@ -39,7 +39,8 @@ public class HomeController {
         job1.setDesignation("Designation");
         job1.setId(1);
         job1.setStartDate(LocalDate.of(2020,1,1));
-        job1.setEndDate(LocalDate.of(2020,3,1));
+        //job1.setEndDate(LocalDate.of(2020,3,1));
+        job1.setCurrentJob(true);
 
         Job job2 = new Job();
         job2.setCompany("Company 2");
@@ -75,7 +76,7 @@ public class HomeController {
 
         System.out.println("\n\n\n\n\n  ###### START");
         System.out.println(userProfile.getJobs());
-        System.out.println("\n\n\n\n\n  #######END");
+        System.out.println("#######END \n\n\n\n\n ");
 
         return "profile-templates/" + userProfile.getTheme() + "/index";
     }

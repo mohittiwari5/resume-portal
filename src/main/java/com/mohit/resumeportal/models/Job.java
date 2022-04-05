@@ -4,6 +4,10 @@ import sun.util.resources.LocaleData;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 @Entity
@@ -26,6 +30,29 @@ public class Job {
     @Column(name = "endDate")
     private  LocalDate endDate;
 
+    @Column(name = "is_current_job")
+    private boolean isCurrentJob;
+
+    @ElementCollection(targetClass = String.class)
+    private List<String> responsibilities = new ArrayList<>();
+
+
+
+    public List<String> getResponsibilities() {
+        return responsibilities;
+    }
+
+    public void setResponsibilities(List<String> responsibilities) {
+        this.responsibilities = responsibilities;
+    }
+
+    public boolean isCurrentJob() {
+        return isCurrentJob;
+    }
+
+    public void setCurrentJob(boolean currentJob) {
+        isCurrentJob = currentJob;
+    }
 
     public int getId() {
         return id;
@@ -76,5 +103,14 @@ public class Job {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 '}';
+    }
+
+    public String getFormattedStartDate(){
+//        return startDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
+        return startDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
+    }
+
+    public String getFormattedEndDate(){
+        return endDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
     }
 }
