@@ -106,7 +106,6 @@ public class Job {
     }
 
     public String getFormattedStartDate(){
-//        return startDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
         return startDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
     }
 
