@@ -1,5 +1,6 @@
 package com.mohit.resumeportal.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import sun.util.resources.LocaleData;
 
 import javax.persistence.*;
@@ -25,9 +26,11 @@ public class Job {
     private String designation;
 
     @Column(name = "startDate")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
     @Column(name = "endDate")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private  LocalDate endDate;
 
     @Column(name = "is_current_job")

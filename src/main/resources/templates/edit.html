@@ -37,6 +37,41 @@
                 <input class="form-control" th:field="*{designation}">
             </div>
 
+            <h2>Jobs</h2>
+            <table class="table">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Company</th>
+                        <th>Designation</th>
+                        <th>startDate</th>
+                        <th>endDate</th>
+                        <th>Is Current Job?</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="job,stats: *{jobs}">
+                        <td>
+                            <input class="form-control" th:field="*{jobs[__${stats.index}__].company}">
+                        </td>
+                        <td>
+                            <input class="form-control" th:field="*{jobs[__${stats.index}__].designation}">
+                        </td>
+                        <td>
+                            <input type="date" class="form-control" th:field="*{jobs[__${stats.index}__].startDate}">
+                        </td>
+                        <td>
+                            <input type="date" class="form-control" th:field="*{jobs[__${stats.index}__].endDate}">
+                        </td>
+                        <td>
+                            <input type="checkbox" class="form-check-input"  th:field="*{jobs[__${stats.index}__].currentJob}">
+                        </td>
+                    </tr>
+                </tbody>
+
+
+            </table>
+
         </form>
     </div>
 
