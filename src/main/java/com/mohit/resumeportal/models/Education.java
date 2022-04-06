@@ -1,5 +1,6 @@
 package com.mohit.resumeportal.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import sun.util.resources.LocaleData;
 
 import javax.persistence.*;
@@ -19,7 +20,9 @@ public class Education {
     private String college;
     private String qualification;
     private String GPA;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private  LocalDate endDate;
     private String summary;
 

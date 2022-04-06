@@ -68,15 +68,62 @@
                         </td>
                     </tr>
                 </tbody>
-
-
             </table>
+
+            <h2>Education</h2>
+            <table class="table">
+                <thead class="table-dark">
+                    <tr>
+                        <th>College</th>
+                        <th>Qualification</th>
+                        <th>GPA</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Summary</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="education,stats: *{educations}">
+                        <td>
+                            <input class="form-control" th:field="*{educations[__${stats.index}__].college}">
+                        </td>
+                        <td>
+                            <input class="form-control" th:field="*{educations[__${stats.index}__].qualification}">
+                        </td>
+                        <td>
+                            <input class="form-control" th:field="*{educations[__${stats.index}__].GPA}">
+                        </td>
+                        <td>
+                            <input type="date" class="form-control" th:field="*{educations[__${stats.index}__].startDate}">
+                        </td>
+                        <td>
+                            <input type="date" class="form-control" th:field="*{educations[__${stats.index}__].endDate}">
+                        </td>
+                        <td>
+                            <textarea  class="form-control" th:field="*{educations[__${stats.index}__].summary}" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Skills</h2>
+            <table>
+                <tr th:each="skill,stats: *{skills}">
+                    <td>
+                        <input class="form-control" th:field="*{skills[__${stats.index}__]}">
+                    </td>
+                </tr>
+            </table>
+
+            <div class="border border-light p-3 mb-4">
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
 
         </form>
     </div>
-
-
-
 
 
 </body>
