@@ -91,8 +91,6 @@ public class HomeController {
     @GetMapping("/edit")
     public String edit(Model model,Principal principal,@RequestParam(required = false,defaultValue = "") String add){
 
-        System.out.println("\n\n\n\n\nParameter is::::"+add+"\n\n\n\n\n");
-
         String userName = principal.getName();
         //Here principal is used to get the logged in user
         model.addAttribute("userId",userName);
@@ -128,15 +126,42 @@ public class HomeController {
         return "redirect:/view/"+userName;
     }
 
+    @GetMapping("/delete")
+    public String delete(Model model, Principal principal,@RequestParam String type,@RequestParam int index){
+
+        String userName = principal.getName();
+        Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userName);
+        userProfileOptional.orElseThrow(() -> new RuntimeException("Not found: " + userName));
+        UserProfile userProfile = userProfileOptional.get();
+
+        if(type.equals("job")){
+            userProfile.getJobs().remove(index);
+        }
+        if(type.equals("education")){
+            userProfile.getEducations().remove(index);
+        }
+        if(type.equals("skill")){
+            userProfile.getSkills().remove(index);
+        }
+
+        userProfileRepository.save(userProfile);
+        return "redirect:/edit";
+
+    }
 
 
 
     @GetMapping("/view/{userId}")
-    public String view(@PathVariable("userId") String userId, Model model){
+    public String view(Principal principal,@PathVariable("userId") String userId, Model model){
+
+        if((principal != null) && !(principal.getName().equals(""))){
+            boolean currentUserProfile = principal.getName().equals(userId);
+            model.addAttribute("currentUserProfile",currentUserProfile);
+        }
+
+        String userName = principal.getName();
         Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userId);
-
         userProfileOptional.orElseThrow(() -> new RuntimeException("Not found: " + userId));
-
         model.addAttribute("userId",userId);
         UserProfile userProfile = userProfileOptional.get();
         model.addAttribute("userProfile",userProfile);

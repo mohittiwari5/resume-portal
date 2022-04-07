@@ -26,6 +26,7 @@
 
 				<div class="yui-u">
 					<div class="contact-info">
+						<h2><a th:if="${currentUserProfile}" href="/edit">Edit</a></h2>
 						<h3><a id="pdf" href="#">Download PDF</a></h3>
 						<h3 th:text="${userProfile.email}"></h3>
 						<h3 th:text="${userProfile.phone}"></h3>
