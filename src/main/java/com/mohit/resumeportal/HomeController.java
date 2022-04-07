@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -33,9 +30,6 @@ public class HomeController {
         profileOptional.orElseThrow(() -> new RuntimeException("Not found: "));
 
         UserProfile profile1 = profileOptional.get();
-
-
-
 
         Job job1 = new Job();
         job1.setCompany("Company 1");
@@ -96,23 +90,28 @@ public class HomeController {
     @GetMapping("/edit")
     public String edit(Model model,Principal principal){
 
-        String userId = principal.getName();
+        String userName = principal.getName();
         //Here principal is used to get the logged in user
-        model.addAttribute("userId",userId);
-        Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userId);
-        userProfileOptional.orElseThrow(() -> new RuntimeException("Not found: " + userId));
+        model.addAttribute("userId",userName);
+        Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userName);
+        userProfileOptional.orElseThrow(() -> new RuntimeException("Not found: " + userName));
         UserProfile userProfile = userProfileOptional.get();
         model.addAttribute("userProfile",userProfile);
         return "edit";
     }
 
     @PostMapping("/edit")
-    public String postEdit(Model model,Principal principal){
+    public String postEdit(Model model, Principal principal, @ModelAttribute UserProfile userProfile){
 
-        String userId = principal.getName();
-        //Here principal is used to get the logged in user
-//        model.addAttribute("userId",principal.getName());
-        return "redirect:/view/"+userId;
+        String userName = principal.getName();
+        Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userName);
+        userProfileOptional.orElseThrow(() -> new RuntimeException("Not found: " + userName));
+        UserProfile savedUserProfile = userProfileOptional.get();
+        userProfile.setId(savedUserProfile.getId());
+        userProfile.setUserName(savedUserProfile.getUserName());
+        userProfile.setTheme(savedUserProfile.getTheme());
+        userProfileRepository.save(userProfile);
+        return "redirect:/view/"+userName;
     }
 
 
@@ -128,9 +127,7 @@ public class HomeController {
         UserProfile userProfile = userProfileOptional.get();
         model.addAttribute("userProfile",userProfile);
 
-        System.out.println("\n\n\n\n\n  ###### START");
-        System.out.println(userProfile.getJobs());
-        System.out.println("#######END \n\n\n\n\n ");
+        System.out.println("\n\n\n\n>>>>>>>>THEME IS::::>>>>>>>>>"+userProfile.getTheme()+"\n\n\n\n\n\n");
 
         return "profile-templates/" + userProfile.getTheme() + "/index";
     }
