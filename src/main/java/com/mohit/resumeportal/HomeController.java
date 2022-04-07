@@ -26,66 +26,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(){
-
-        Optional<UserProfile> profileOptional = userProfileRepository.findByUserName("elon");
-        profileOptional.orElseThrow(() -> new RuntimeException("Not found: "));
-
-        UserProfile profile1 = profileOptional.get();
-
-        Job job1 = new Job();
-        job1.setCompany("Company 1");
-        job1.setDesignation("Designation");
-        job1.setId(1);
-        job1.setStartDate(LocalDate.of(2020,1,1));
-        job1.setCurrentJob(true);
-        job1.getResponsibilities().add("Founder of SpaceX");
-        job1.getResponsibilities().add("Founder of Tesla");
-        job1.getResponsibilities().add("super minded person");
-
-        Job job2 = new Job();
-        job2.setCompany("Company 2");
-        job2.setDesignation("Designation 2");
-        job2.setId(2);
-        job2.setStartDate(LocalDate.of(2019,5,1));
-        job2.setEndDate(LocalDate.of(2020,1,1));
-        job2.getResponsibilities().add("Founder of SpaceX");
-        job2.getResponsibilities().add("Founder of Tesla");
-        job2.getResponsibilities().add("super minded person");
-
-
-        profile1.getJobs().clear();
-        profile1.getJobs().add(job1);
-        profile1.getJobs().add(job2);
-
-        Education education1 = new Education();
-        education1.setCollege("Subodh");
-        education1.setQualification("BCA");
-        education1.setSummary("Studied nothing");
-        education1.setGPA("4.3");
-        education1.setStartDate(LocalDate.of(2016,5,1));
-        education1.setEndDate(LocalDate.of(2019,1,1));
-
-        Education education2 = new Education();
-        education2.setCollege("Compucom");
-        education2.setQualification("MCA");
-        education2.setSummary("Studied nothing");
-        education2.setGPA("3.5");
-        education2.setStartDate(LocalDate.of(2021,5,1));
-        education2.setEndDate(LocalDate.of(2023,1,1));
-
-        profile1.getEducations().clear();
-        profile1.getEducations().add(education1);
-        profile1.getEducations().add(education2);
-
-        profile1.getSkills().clear();
-        profile1.getSkills().add("Web Designing");
-        profile1.getSkills().add("Graphics");
-        profile1.getSkills().add("Gossip");
-
-
-        userProfileRepository.save(profile1);
-
-        return "profile";
+       return "index";
     }
 
     @GetMapping("/edit")
