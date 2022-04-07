@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.DefaultStyledDocument;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -88,7 +89,9 @@ public class HomeController {
     }
 
     @GetMapping("/edit")
-    public String edit(Model model,Principal principal){
+    public String edit(Model model,Principal principal,@RequestParam(required = false,defaultValue = "") String add){
+
+        System.out.println("\n\n\n\n\nParameter is::::"+add+"\n\n\n\n\n");
 
         String userName = principal.getName();
         //Here principal is used to get the logged in user
@@ -96,6 +99,17 @@ public class HomeController {
         Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userName);
         userProfileOptional.orElseThrow(() -> new RuntimeException("Not found: " + userName));
         UserProfile userProfile = userProfileOptional.get();
+
+        if(add.equals("job")){
+            userProfile.getJobs().add(new Job());
+        }
+        if(add.equals("education")){
+            userProfile.getEducations().add(new Education());
+        }
+        if(add.equals("skill")){
+            userProfile.getSkills().add("");
+        }
+
         model.addAttribute("userProfile",userProfile);
         return "edit";
     }
